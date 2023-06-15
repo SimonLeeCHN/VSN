@@ -1,9 +1,0 @@
-matplotlib
-numpy
-pillow
-torch
-torchvision
-tensorboard
-future
-tqdm
-opencv
