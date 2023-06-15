@@ -1,8 +1,9 @@
 matplotlib
 numpy
-Pillow
+pillow
 torch
 torchvision
 tensorboard
 future
 tqdm
+opencv

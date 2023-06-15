@@ -1,3 +1,0 @@
-# VSNLite
-
-coming soon.

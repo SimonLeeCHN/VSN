@@ -3,17 +3,19 @@ from os import listdir
 import numpy as np
 from glob import glob
 import torch
+import torchvision.transforms.functional as TF
 from torch.utils.data import Dataset
 import logging
 from PIL import Image
 
 
 class BasicDataset(Dataset):
-    def __init__(self, imgs_dir, masks_dir, scale=1, mask_suffix=''):
+    def __init__(self, imgs_dir, masks_dir, scale=1, mask_suffix='', force_samesize=False):
         self.imgs_dir = imgs_dir
         self.masks_dir = masks_dir
         self.scale = scale
         self.mask_suffix = mask_suffix
+        self.force_samesize = force_samesize                # 是否需要将图片都强制转为1280*1024的图像
         assert 0 < scale <= 1, 'Scale must be between 0 and 1'
 
         # listdir 返回指定文件夹下包含的文件或文件夹名字列表
@@ -26,8 +28,20 @@ class BasicDataset(Dataset):
         return len(self.ids)
 
     @classmethod
-    def preprocess(cls, pil_img, scale):
+    def preprocess(cls, pil_img, scale, force_samesize=False):
         w, h = pil_img.size
+
+        """
+        强制将图片转为1280*1024的图像
+        1024*1280的图像将进行旋转操作
+        其他图像将进行拉伸操作
+        """
+        if force_samesize:
+            if w == 1024 & h == 1280:
+                pil_img = TF.rotate(pil_img, 90)
+            else:
+                pil_img = pil_img.resize(1280, 1024)
+
         newW, newH = int(scale * w), int(scale * h)
         assert newW > 0 and newH > 0, 'Scale is too small'
         pil_img = pil_img.resize((newW, newH))
@@ -58,9 +72,8 @@ class BasicDataset(Dataset):
 
         assert img.size == mask.size, \
             f'Image and mask {idx} should be the same size, but are {img.size} and {mask.size}'
-
-        img = self.preprocess(img, self.scale)
-        mask = self.preprocess(mask, self.scale)
+        img = self.preprocess(img, self.scale, self.force_samesize)
+        mask = self.preprocess(mask, self.scale, self.force_samesize)
 
         return {
             'image': torch.from_numpy(img).type(torch.FloatTensor),

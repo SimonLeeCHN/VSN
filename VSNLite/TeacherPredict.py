@@ -1,3 +1,6 @@
+'''
+让Teacher网络输出供student训练过程中用以参考的答案
+'''
 import argparse
 import logging
 import os
@@ -12,6 +15,7 @@ from torchvision import transforms
 from NetModel import VSN
 from utils.data_vis import plot_img_and_mask
 from utils.dataset import BasicDataset
+from utils.img_process import *
 
 
 def predict_img(net,
@@ -53,8 +57,7 @@ def predict_img(net,
 def get_args():
     parser = argparse.ArgumentParser(description='Predict masks from input images',
                                      formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('--model', '-m', default='MODEL.pth',
-                        metavar='FILE',
+    parser.add_argument('--model', '-m', default='MODEL.pth',metavar='FILE',
                         help="Specify the file in which the model is stored")
     parser.add_argument('--input', '-i', metavar='INPUT', nargs='+',
                         help='filenames of input images', required=True)
@@ -75,7 +78,10 @@ def get_args():
                         default=0.5)
     parser.add_argument('--scale', '-s', type=float,
                         help="Scale factor for the input images",
-                        default=0.5)
+                        default=1)
+    parser.add_argument('--get-MCR', action='store_true',
+                        help="save the maximum connected region rather than the raw predict result",
+                        default=False)
 
     return parser.parse_args()
 
@@ -106,32 +112,31 @@ def input_dir_solution(args):
     outFileList = []
 
     # 为输入文件列表添加路径前缀
-    inputPath = args.input
-    for f in os.listdir(inputPath[0]):
-        inputFileList.append(inputPath[0] + '/' + f)
+    inputPath = args.input[0]
+    for f in os.listdir(inputPath):
+        inputFileList.append(inputPath + '/' + f)
 
     # 创建输出文件夹
-    _outFilePath = inputPath[0] + "/out"
+    _outFilePath = "./teacherOut"
     if not os.path.exists(_outFilePath):
         os.mkdir(_outFilePath)
 
     # 为输出文件列表添加路径前缀以及后缀名
     for f in inputFileList:
-        _tempList1 = os.path.splitext(f)
-        _tempList2 = os.path.split(_tempList1[0])
-        outFileList.append("{}/out/{}_VSN{}".format(_tempList2[0], _tempList2[1], _tempList1[1]))
+        _root, _ext = os.path.splitext(f)
+        _pathHead, _imgName = os.path.split(_root)
+        outFileList.append("./teacherOut/{}{}".format(_imgName, _ext))
 
     return inputFileList, outFileList
 
 
 if __name__ == "__main__":
     args = get_args()
-    in_files = args.input
-    out_files = get_output_filenames(args)
 
+    # 加载teacher网络
     net = VSN(n_channels=3, n_classes=1)
 
-    logging.info("Loading model {}".format(args.model))
+    logging.info("Loading teacher model {}".format(args.model))
 
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     logging.info(f'Using device {device}')
@@ -140,9 +145,12 @@ if __name__ == "__main__":
 
     logging.info("Model loaded !")
 
-    #True 表示输入为文件夹路径，False 则输入为文件名
+    # True 表示输入为文件夹路径，False 则输入为文件名
     if args.is_dir:
         in_files, out_files = input_dir_solution(args)
+    else:
+        in_files = args.input
+        out_files = get_output_filenames(args)
 
     for i, fn in enumerate(in_files):
 
@@ -164,6 +172,10 @@ if __name__ == "__main__":
         if not args.no_save:
             out_fn = out_files[i]
             result = mask_to_image(mask)
+            if args.get_MCR:
+                _tempMat = conv_img2cvmat(result)
+                _tempMat, _ = get_largest_area(_tempMat)
+                result = conv_cvmat2img(_tempMat)
             result.save(out_files[i])
 
             logging.info("Mask saved to {}".format(out_files[i]))
