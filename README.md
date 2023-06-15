@@ -113,7 +113,22 @@ options:
   --get-MCR             Save the maximum connected region rather than the raw predict result (default: False)
 ```
 
+During prediction, the `--model` parameter is used to specify the architecture of the model. The model weights should be placed in the *VSNLite* folder in the format of `MODELNAME.pth`.
 
+The `--input` parameter indicates the location of the input images.
+
+The `--is-dir` parameter indicates that the input is a folder path. You can use this parameter to perform batch prediction on all the images in the folder. Please note that when using this parameter, the `--output` parameter indicating the output folder will be ignored. The batch-predicted images will be saved in the newly generated *out* folder under the path specified by the `--input` parameter.
 
 # Useful tools
 
+*tools* folder stores some useful scripting tools that can be used during training.
+
+- **augmentor**: This script will call [Augmentor](https://github.com/mdbloice/Augmentor) to augment the original pictures in the specified folder and the corresponding annotated pictures. For more instructions, please refer : https://github.com/mdbloice/Augmentor
+
+- **remove_name_space**: A simple batch script file. Using this script can easily remove the space characters in the file name after batch renaming to avoid errors when reading files.
+
+- **labelme_trans.py**: A script to batch convert [labelme](https://github.com/wkentaro/labelme) annotated json files into pictures. It converts json files in the folder in batches and extracts the corresponding images to the specified folders. 
+
+- **VickerSegCompare**: A tool for indentation image measurement and comparison. This tool offers a simple way to measure the segmented indentation area, diagonal length, and compare the Dice coefficient between two images. Additionally, the software supports batch testing and saves the test results to a CSV file.
+
+  ![demo](tools/demo.gif)
