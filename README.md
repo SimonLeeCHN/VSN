@@ -1,6 +1,6 @@
 #  Lightweight Segmentation Neural Networks for Measuring Vickers Hardness  
 
-![image-20230615093621881](README.assets/image-20230615093621881.png)
+<img src="README.assets/image-20230615093621881.png" alt="image-20230615093621881" style="zoom:50%;" />
 
 The repository manages the code and some of the utilities related to our project **VSNLite**.
 
