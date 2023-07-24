@@ -62,6 +62,9 @@ options:
                         Percent of the data that is used as validation (0-100) (default: 10.0)
   -f LOAD, --load LOAD  Load model from a .pth file (default: False)
 ```
+If you don't want to spend too much time and efforts on collecting data, you can try using the Vickers indentation image dataset we shared. Although it is not perfect at the moment, we hope it will help you. You can download it by visiting the link below:
+
+https://drive.google.com/drive/folders/1lu8MJZz_jBU9nPpHsYtuajSAb_fV5KHi?usp=sharing
 
 When training with your own dataset, you need to modify the following variables in the *VSNLite/train.py* file:
 
