@@ -1,12 +1,12 @@
 #  Lightweight Segmentation Neural Networks for Measuring Vickers Hardness  
 
-<img src="README.assets/image-20230615093621881.png" alt="image-20230615093621881" style="zoom:50%;" />
+<img src="README.assets/image-method compare.png" alt="image-20230615093621881" style="zoom:50%;" />
 
 The repository manages the code and some of the utilities related to our project **VSNLite**.
 
 Compared to previous methods, the proposed networks achieve a reduction of 35.2 times in terms of computational cost with up to 38 times fewer parameters, while maintaining the same level of segmentation accuracy.
 
-![image-20230615095054762](README.assets/image-20230615095054762.png)
+![image-20230615095054762](README.assets/image-method cost.png)
 
 The code of the VSNLite project will be synchronized to this repository after the acceptance of the paper.
 
