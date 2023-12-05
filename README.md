@@ -2,9 +2,11 @@ This repository manages the codes and some of the utilities related to our proje
 
 Our latest work, **VSNLite**, has been accepted by *IEEE Transactions on Instrumentation & Measurement*.
 
+------
+
 #  Lightweight Segmentation Neural Networks for Measuring Vickers Hardness  
 
-------
+
 
 <img src="README.assets/image-method compare.png" alt="image-20230615093621881" style="zoom:50%;" />
 
@@ -14,15 +16,11 @@ Compared to previous method (VSN), the new proposed networks achieve a reduction
 
 # Application
 
-------
-
 Our approach has been successfully applied to commercial software, and the GIF below shows how it works in practice.
 
 ![animation](./README.assets/animation.gif)
 
 # Usage
-
-------
 
 1. Clone this repo
 
@@ -41,8 +39,6 @@ pip install -r VSNLite/requirements.txt
 3. Start training your model by using the file *VSNLite/train.py*, or use *VSNLite/predict.py* to load pre-trained model weights for testing.
 
 # Training
-
-------
 
 ```shell
 > python train.py -h
@@ -95,8 +91,6 @@ tensorboard --logdir=runs
 
 # Prediction
 
-------
-
 ```shell
 > python predict.py -h
 usage: predict.py [-h] --model MODEL --input INPUT [INPUT ...] [--is-dir] [--output INPUT [INPUT ...]] [--viz]
@@ -130,8 +124,6 @@ The `--is-dir` parameter indicates that the input is a folder path. You can use 
 
 # Useful tools
 
-------
-
 *tools* folder stores some useful scripting tools that can be used during training.
 
 - **augmentor**: This script will call [Augmentor](https://github.com/mdbloice/Augmentor) to augment the original pictures in the specified folder and the corresponding annotated pictures. For more instructions, please refer : https://github.com/mdbloice/Augmentor
@@ -145,8 +137,6 @@ The `--is-dir` parameter indicates that the input is a folder path. You can use 
   ![demo](tools/demo.gif)
 
 # Citation
-
-------
 
 VSN:
 
