@@ -1,26 +1,28 @@
+This repository manages the codes and some of the utilities related to our project of Vickers indentation segmentation.
+
+Our latest work, **VSNLite**, has been accepted by *IEEE Transactions on Instrumentation & Measurement*.
+
 #  Lightweight Segmentation Neural Networks for Measuring Vickers Hardness  
-
-<img src="README.assets/image-method compare.png" alt="image-20230615093621881" style="zoom:50%;" />
-
-The repository manages the code and some of the utilities related to our project **VSNLite**.
-
-Compared to previous methods, the proposed networks achieve a reduction of 35.2 times in terms of computational cost with up to 38 times fewer parameters, while maintaining the same level of segmentation accuracy.
-
-<img src="README.assets/image-method cost.png"/>
-
-The code of the VSNLite project will be synchronized to this repository after the acceptance of the paper.
 
 ------
 
+<img src="README.assets/image-method compare.png" alt="image-20230615093621881" style="zoom:50%;" />
+
+Compared to previous method (VSN), the new proposed networks achieve a reduction of 35.2 times in terms of computational cost with up to 38 times fewer parameters, while maintaining the same level of segmentation accuracy.
+
+<img src="README.assets/image-method cost.png"/>
+
 # Application
+
+------
 
 Our approach has been successfully applied to commercial software, and the GIF below shows how it works in practice.
 
 ![animation](./README.assets/animation.gif)
 
-------
-
 # Usage
+
+------
 
 1. Clone this repo
 
@@ -39,6 +41,8 @@ pip install -r VSNLite/requirements.txt
 3. Start training your model by using the file *VSNLite/train.py*, or use *VSNLite/predict.py* to load pre-trained model weights for testing.
 
 # Training
+
+------
 
 ```shell
 > python train.py -h
@@ -91,6 +95,8 @@ tensorboard --logdir=runs
 
 # Prediction
 
+------
+
 ```shell
 > python predict.py -h
 usage: predict.py [-h] --model MODEL --input INPUT [INPUT ...] [--is-dir] [--output INPUT [INPUT ...]] [--viz]
@@ -124,6 +130,8 @@ The `--is-dir` parameter indicates that the input is a folder path. You can use 
 
 # Useful tools
 
+------
+
 *tools* folder stores some useful scripting tools that can be used during training.
 
 - **augmentor**: This script will call [Augmentor](https://github.com/mdbloice/Augmentor) to augment the original pictures in the specified folder and the corresponding annotated pictures. For more instructions, please refer : https://github.com/mdbloice/Augmentor
@@ -135,3 +143,23 @@ The `--is-dir` parameter indicates that the input is a folder path. You can use 
 - **VickerSegCompare**: A tool for indentation image measurement and comparison. This tool offers a simple way to measure the segmented indentation area, diagonal length, and compare the Dice coefficient between two images. Additionally, the software supports batch testing and saves the test results to a CSV file.
 
   ![demo](tools/demo.gif)
+
+# Citation
+
+------
+
+VSN:
+
+> @ARTICLE{9978658,
+>   author={Cai, Chenglin and Li, Zexian and Yin, Feng and Wang, Zhong and Chen, Yangzhuo},
+>   journal={IEEE Transactions on Instrumentation and Measurement}, 
+>   title={Automatic Vickers Hardness Measurement With Neural Network Segmentation}, 
+>   year={2023},
+>   volume={72},
+>   number={},
+>   pages={1-11},
+>   doi={10.1109/TIM.2022.3227986}}
+
+VSNLite:
+
+> Wait for update
