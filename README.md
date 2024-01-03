@@ -152,4 +152,13 @@ VSN:
 
 VSNLite:
 
-> Wait for update
+> @ARTICLE{10363377,
+>   author={Li, Zexian and Cai, Chenglin and Yin, Feng and Guan, Wenhui and Fang, Yun},
+>   journal={IEEE Transactions on Instrumentation and Measurement}, 
+>   title={Lightweight Segmentation Neural Networks for Measuring Vickers Hardness}, 
+>   year={2024},
+>   volume={73},
+>   number={},
+>   pages={1-9},
+>   doi={10.1109/TIM.2023.3343788}}
+
